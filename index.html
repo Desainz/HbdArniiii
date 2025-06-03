@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Selamat Ulang Tahun, Kak!</title>
+
+    <!-- Font & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Antique&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/4f3ce16e3e.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Shippori Antique", sans-serif;
+        background-image: url("https://i.postimg.cc/pLd7XMrW/wallpaper.jpg");
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        text-align: center;
+        overflow-x: hidden;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      #konten {
+        max-width: 400px;
+        margin: 0 auto;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 25px 20px 40px;
+        border-radius: 18px;
+        box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
+        backdrop-filter: blur(8px);
+        animation: slideUpFadeIn 1s ease forwards;
+      }
+
+      @keyframes slideUpFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .image img {
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 170, 255, 0.6);
+        animation: pop 1.5s ease-in-out infinite alternate;
+        margin-bottom: 20px;
+        filter: drop-shadow(0 0 10px #00aaffaa);
+        transition: filter 0.3s ease;
+      }
+      .image img:hover {
+        filter: drop-shadow(0 0 18px #00aaffff);
+        cursor: pointer;
+        transform: scale(1.05);
+      }
+
+      @keyframes pop {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.08);
+        }
+      }
+
+      #message {
+        font-size: 1.3rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        animation: fadeIn 3s ease forwards;
+        user-select: none;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .button {
+        display: inline-block;
+        padding: 14px 28px;
+        background: linear-gradient(45deg, #00aaff, #0066cc);
+        border-radius: 30px;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 0 6px 15px rgba(0, 170, 255, 0.7);
+        transition: background 0.3s ease, transform 0.3s ease;
+        user-select: none;
+      }
+      .button:hover {
+        background: linear-gradient(45deg, #0088cc, #004c99);
+        transform: scale(1.05);
+      }
+
+      .fa-heart {
+        position: fixed;
+        color: #ff3860;
+        font-size: 22px;
+        top: -10px;
+        animation: fall linear forwards;
+        z-index: 999;
+        user-select: none;
+        pointer-events: none;
+        filter: drop-shadow(0 0 5px #ff3860);
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(110vh);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #konten {
+          max-width: 90vw;
+          padding: 20px 15px 35px;
+        }
+        #message {
+          font-size: 1.1rem;
+        }
+        .button {
+          padding: 12px 22px;
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="konten">
+      <div class="image">
+        <img src="yeni.jpg" alt="Foto Kakak" />
+      </div>
+      <div id="message"></div>
+      <a
+        class="button"
+        id="btnWA"
+        href="https://wa.me/6281234567890?text=Selamat%20ulang%20tahun%2C%20Kak%20Yeni!%20%F0%9F%92%9C"
+        target="_blank"
+        style="display: none"
+        >Kirim Pesan WA</a
+      >
+    </div>
+
+    <audio id="audioIntro" preload="auto" src="musiktiktok.m4a"></audio>
+    <audio id="audioHBD" preload="auto" src="hbd.mp3"></audio>
+
+    <script>
+      const audioIntro = document.getElementById("audioIntro");
+      const audioHBD = document.getElementById("audioHBD");
+      const btnWA = document.getElementById("btnWA");
+      const messageEl = document.getElementById("message");
+
+      audioIntro.volume = 0.25;
+
+      async function mulai() {
+        const { value: nama } = await Swal.fire({
+          title: "Halo! Siapa namamu?",
+          input: "text",
+          inputPlaceholder: "Tulis namamu di sini",
+          confirmButtonText: "Lanjut",
+          allowOutsideClick: false,
+          inputValidator: (value) => {
+            if (!value || value.length > 15) {
+              return "Nama tidak boleh kosong atau lebih dari 15 karakter!";
+            }
+          },
+        });
+
+        if (!nama) return;
+        window.nama = nama;
+
+        try {
+          await audioIntro.play();
+        } catch (e) {
+          console.warn("Autoplay gagal, tunggu user interaction");
+        }
+
+        await Swal.fire(`Hai, ${nama}! 👋`);
+        await Swal.fire("Hari ini hari spesial 🎉");
+        await Swal.fire("Kakak ulang tahun 🥰");
+        await Swal.fire("Nih, ucapan dari saya buat kak Yeni!");
+
+        pilihWarna();
+      }
+
+      async function pilihWarna() {
+        const { isConfirmed: pilihBiru } = await Swal.fire({
+          title: `${window.nama}, pilih warna favorit kakak`,
+          text: "Warna mana yang paling menggambarkan kak?",
+          showCancelButton: true,
+          confirmButtonText: "💙 Biru",
+          cancelButtonText: "❤️ Merah",
+        });
+
+        const warna = pilihBiru ? "Biru" : "Merah";
+
+        await Swal.fire(`Warna pilihanmu: ${warna}`, "Siap-siap yaa!", "info");
+
+        tampilkanUcapan(warna);
+      }
+
+      function tampilkanUcapan(warna) {
+        const pesan =
+          warna === "Biru"
+            ? `Selamat ulang tahun, Kak Yeni! 💙<br>${window.nama} doain semoga semua impianmu tercapai satu per satu.<br>Sehat, bahagia, dan makin jadi berkat ya 😇`
+            : `Selamat ulang tahun, Kak Yeni! ❤️<br>Semoga kakak selalu dikelilingi cinta, damai, dan semangat luar biasa!<br>Dari ${window.nama} yang selalu support 🫶`;
+
+        messageEl.innerHTML = pesan;
+        btnWA.style.display = "inline-block";
+
+        audioIntro.pause();
+        audioIntro.currentTime = 0;
+        audioHBD.volume = 0.4;
+        audioHBD.play();
+
+        startHeartRain();
+      }
+
+      function createHeart() {
+        const heart = document.createElement("i");
+        heart.className = "fas fa-heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }
+
+      function startHeartRain() {
+        setInterval(createHeart, 300);
+      }
+
+      window.onload = mulai;
+    </script>
+  </body>
+</html>
