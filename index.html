@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Selamat Ulang Tahun, Kak!</title>
+    <title>Selamat Ulang Tahun, Arni!</title>
 
     <!-- Font & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -212,15 +212,15 @@
         await Swal.fire(`Hai, ${nama}! 👋`);
         await Swal.fire("Hari ini hari spesial 🎉");
         await Swal.fire("Kakak ulang tahun 🥰");
-        await Swal.fire("Nih, ucapan dari saya buat kak Yeni!");
+        await Swal.fire("Nih, ucapan dari saya buat Arni!");
 
         pilihWarna();
       }
 
       async function pilihWarna() {
         const { isConfirmed: pilihBiru } = await Swal.fire({
-          title: `${window.nama}, pilih warna favorit kakak`,
-          text: "Warna mana yang paling menggambarkan kak?",
+          title: `${window.nama}, pilih warna favoritmu`,
+          text: "Warna mana yang paling menggambarkanmu?",
           showCancelButton: true,
           confirmButtonText: "💙 Biru",
           cancelButtonText: "❤️ Merah",
@@ -236,8 +236,8 @@
       function tampilkanUcapan(warna) {
         const pesan =
           warna === "Biru"
-            ? `Selamat ulang tahun, Kak Yeni! 💙<br>${window.nama} doain semoga semua impianmu tercapai satu per satu.<br>Sehat, bahagia, dan makin jadi berkat ya 😇`
-            : `Selamat ulang tahun, Kak Yeni! ❤️<br>Semoga kakak selalu dikelilingi cinta, damai, dan semangat luar biasa!<br>Dari ${window.nama} yang selalu support 🫶`;
+            ? `Selamat ulang tahun, Arni! 💙<br>${window.nama} doain semoga semua impianmu tercapai satu per satu.<br>Sehat, bahagia, dan makin jadi berkat ya 😇`
+            : `Selamat ulang tahun, Arni! ❤️<br>Semoga kamu selalu dikelilingi cinta, damai, dan semangat luar biasa!<br>Dari ${window.nama} yang selalu support 🫶`;
 
         messageEl.innerHTML = pesan;
         btnWA.style.display = "inline-block";
